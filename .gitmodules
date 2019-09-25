@@ -1,0 +1,6 @@
+[submodule "backoffice"]
+	path = backoffice
+	url = ../backoffice/
+[submodule "backend"]
+	path = backend
+	url = ../backend/
