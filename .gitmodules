@@ -1,6 +1,6 @@
 [submodule "backoffice"]
 	path = backoffice
-	url = https://github.com/fredoing/backend-moviles-I.git
+	url = https://github.com/fredoing/backoffice-moviles-I.git
 [submodule "backend"]
 	path = backend
 	url = https://github.com/fredoing/backend-moviles-I.git
