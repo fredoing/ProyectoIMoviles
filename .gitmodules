@@ -3,4 +3,4 @@
 	url = https://github.com/fredoing/backend-moviles-I.git
 [submodule "backend"]
 	path = backend
-	url = ../backend
+	url = https://github.com/fredoing/backend-moviles-I.git
