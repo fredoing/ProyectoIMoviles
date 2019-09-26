@@ -4,3 +4,6 @@
 [submodule "backend"]
 	path = backend
 	url = https://github.com/fredoing/backend-moviles-I.git
+[submodule "java-connect-eg"]
+	path = java-connect-eg
+	url = https://github.com/fredoing/java-connect-eg.git
