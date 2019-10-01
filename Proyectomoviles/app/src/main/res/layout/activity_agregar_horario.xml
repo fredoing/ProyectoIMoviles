@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".AgregarRestaurante.AgregarHorario">
+
+    <Button
+        android:id="@+id/btn_volverAgregarHorario"
+        android:layout_width="58dp"
+        android:layout_height="36dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/ic_back_arrow">
+
+    </Button>
+
+    <Button
+        android:id="@+id/btn_NuevoHorario"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="395dp"
+        android:background="@color/colorPrimary"
+        android:text="Agregar"
+        android:textColor="@color/colorText">
+
+    </Button>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="280sp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btn_TerminarAgregarHorario"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15sp"
+            android:background="@color/colorPrimary"
+            android:text="Terminar"
+            android:textColor="@color/colorText">
+
+        </Button>
+
+        <ListView
+            android:id="@+id/listView_NuevosHorarios"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"></ListView>
+
+    </RelativeLayout>
+
+    <Spinner
+        android:id="@+id/spinner_dia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="140sp"
+        android:entries="@array/lista_dias"
+        android:prompt="@string/dia_prompt" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="185sp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="55sp"
+        android:gravity="center"
+        android:text="Hora de inicio"
+        android:textColor="@color/colorText"
+        android:textSize="25sp">
+
+    </TextView>
+
+
+
+    <Spinner
+        android:id="@+id/spinner_horaInicio"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="55sp"
+        android:layout_marginTop="225sp"
+
+        />
+
+    <Spinner
+        android:id="@+id/spinner_minutoInicio"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="215sp"
+        android:layout_marginTop="225sp"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="270sp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="55sp"
+        android:gravity="center"
+        android:text="Hora de fin"
+        android:textColor="@color/colorText"
+        android:textSize="25sp">
+
+    </TextView>
+
+
+    <Spinner
+        android:id="@+id/spinner_horaFin"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="55sp"
+        android:layout_marginTop="310sp"
+
+        />
+
+    <Spinner
+        android:id="@+id/spinner_minutoFin"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="215sp"
+        android:layout_marginTop="310sp"
+
+        />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35sp"
+        android:gravity="center"
+        android:text="Agregar Horario"
+        android:textColor="@color/colorText"
+        android:textSize="30sp"></TextView>
+
+
+
+</RelativeLayout>

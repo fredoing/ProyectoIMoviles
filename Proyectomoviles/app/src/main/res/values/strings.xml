@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Proyecto moviles</string>
+    <string name="facebook_app_id">535022397261330</string>
+    <string name="fb_login_protocol_scheme">fb535022397261330</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="google_map_api_key">AIzaSyAdDHxffQYj1u-d6gQ29uenbSa1GnIY0FM</string>)
+    <string name="dia_prompt">Seleccione un día</string>
+    <string name="precio_prompt">Seleccione un precio</string>
+    <string-array name="lista_dias">
+        <item>Lunes</item>
+        <item>Martes</item>
+        <item>Miércoles</item>
+        <item>Jueves</item>
+        <item>Viernes</item>
+        <item>Sábado</item>
+        <item>Domingo</item>
+    </string-array>
+
+    <string-array name="lista_precios">
+        <item>Caro</item>
+        <item>Medio</item>
+        <item>Barato</item>
+    </string-array>
+
+</resources>

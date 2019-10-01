@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VerRestaurante.VistaRestaurante"
+    android:background="@color/colorPrimary">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <Button
+                android:id="@+id/btn_vistaRestaurante_back"
+                android:layout_width="35sp"
+                android:layout_height="35sp"
+                android:layout_marginStart="10sp"
+                android:background="@drawable/ic_back_arrow"/>
+            <ImageView
+                android:id="@+id/img_vistaRestaurante_restaurante"
+                android:layout_marginTop="45sp"
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                android:src="@drawable/restaurante_base"/>
+
+            <TextView
+                android:id="@+id/txt_vistaRestaurante_NombreRestaurante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/img_vistaRestaurante_restaurante"
+                android:layout_marginBottom="-45sp"
+                android:text="Burger King"
+                android:textSize="25sp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="30sp"
+                android:textColor="@color/colorText">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/txt_vistaRestaurante_TipoComida"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/txt_vistaRestaurante_NombreRestaurante"
+                android:layout_marginBottom="-25sp"
+                android:text="Hamburgesas"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="30sp"
+                android:textSize="20sp"
+                android:textColor="@color/colorText">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/txt_vistaRestaurante_Precio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/txt_vistaRestaurante_TipoComida"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="52sp"
+                android:layout_marginBottom="-31sp"
+                android:text="Barato"
+                android:textSize="19sp"
+                android:textColor="@color/colorText">
+
+            </TextView>
+            <ImageView
+                android:src="@drawable/ic_precio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/txt_vistaRestaurante_TipoComida"
+                android:layout_marginBottom="-30sp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="30sp">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/txt_vistaRestaurante_Calificacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/txt_vistaRestaurante_TipoComida"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="152sp"
+                android:layout_marginBottom="-31sp"
+                android:text="4.7"
+                android:textSize="19sp"
+                android:textColor="@color/colorText">
+
+            </TextView>
+            <ImageView
+                android:src="@drawable/ic_califcacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/txt_vistaRestaurante_TipoComida"
+                android:layout_marginBottom="-30sp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="178sp">
+            </ImageView>
+            <Spinner
+                android:id="@+id/spinner_Calificar"
+                android:layout_width="100sp"
+                android:layout_height="32sp"
+                android:layout_alignBottom="@id/btn_AgregarCalificacion"
+                android:layout_marginBottom="40sp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="220sp"></Spinner>
+            <Button
+                android:id="@+id/btn_AgregarCalificacion"
+                android:layout_width="100dp"
+                android:layout_height="32dp"
+
+                android:layout_alignBottom="@id/txt_vistaRestaurante_TipoComida"
+                android:layout_marginBottom="-36sp"
+                android:background="@color/colorPrimary"
+                android:text="Calificar"
+                android:textColor="@color/colorText"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="220sp"></Button>
+
+
+            <TextView
+                android:id="@+id/txt_vistaRestaurante_Horarios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="40dp"
+                android:layout_alignBottom="@id/btn_AgregarCalificacion"
+                android:layout_marginBottom="-40dp"
+                android:gravity="center"
+                android:text="Horarios"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></TextView>
+            <ListView
+                android:id="@+id/listView_MostrarHorarios"
+                android:layout_width="320sp"
+                android:layout_height="0sp"
+                android:layout_alignTop="@+id/txt_vistaRestaurante_Horarios"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="60dp"/>
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalView"
+                android:layout_alignTop="@+id/listView_MostrarHorarios"
+                android:layout_marginTop="60sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:fillViewport="false">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                <GridView
+                    android:id="@+id/gridView_VistaRestaurante"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="horizontal"
+                    android:stretchMode="none"
+                    android:scrollbarAlwaysDrawHorizontalTrack="true"
+                    android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+
+
+            </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/btn_VistaRestaurante_AgregarImagen"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_marginEnd="147dp"
+                android:layout_alignBottom="@id/horizontalView"
+                android:layout_marginBottom="-60sp"
+                android:background="@color/colorPrimary"
+                android:layout_centerHorizontal="true"
+                android:text="Agregar Imagen"
+                android:textColor="@color/colorText"></Button>
+
+
+
+            <ListView
+                android:id="@+id/listView_MostrarComentarios"
+                android:layout_width="320sp"
+                android:layout_height="0sp"
+                android:layout_alignBottom="@+id/btn_VistaRestaurante_AgregarImagen"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="-35dp"/>
+
+            <TextView
+                android:id="@+id/txt_NuevoComentario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="35dp"
+                android:layout_alignBottom="@id/listView_MostrarComentarios"
+                android:layout_marginBottom="-25dp"
+                android:gravity="center"
+                android:text="Nuevo Comentario"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></TextView>
+
+            <EditText
+                android:id="@+id/editTxt_NuevoComentario"
+                android:layout_width="320sp"
+                android:minHeight="50sp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/txt_NuevoComentario"
+                android:layout_marginTop="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="35dp"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></EditText>
+            <Button
+                android:id="@+id/btn_VistaRestaurante_AgregarComentario"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_marginEnd="147dp"
+                android:layout_alignTop="@id/editTxt_NuevoComentario"
+                android:layout_marginTop="70sp"
+                android:background="@color/colorPrimary"
+                android:layout_centerHorizontal="true"
+                android:text="Agregar Comentario"
+                android:textColor="@color/colorText"></Button>
+
+            <TextView
+                android:id="@+id/txt_vistaRestaurante_Ubicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="40dp"
+                android:layout_alignBottom="@id/btn_VistaRestaurante_AgregarComentario"
+                android:layout_marginBottom="-40dp"
+                android:gravity="center"
+                android:text="Ubicación"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></TextView>
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map_verRestaurante"
+                android:layout_width="match_parent"
+                android:layout_height="300sp"
+                android:layout_alignTop="@+id/txt_vistaRestaurante_Ubicacion"
+                android:layout_marginTop="60sp"
+                android:layout_marginBottom="25sp"
+                />
+
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

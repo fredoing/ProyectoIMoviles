@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="95dp"
+        android:background="@color/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:text="Nombre"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></TextView>
+
+            <EditText
+                android:id="@+id/editTxt_NuevoRestaurante_Nombre"
+                android:layout_width="320sp"
+                android:layout_height="50sp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="30dp"
+
+                android:inputType="textPersonName"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></EditText>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="120dp"
+                android:gravity="center"
+                android:text="Tipo de Comida"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></TextView>
+
+            <EditText
+                android:id="@+id/editTxt_NuevoRestaurante_TipoComida"
+                android:layout_width="320sp"
+                android:layout_height="50sp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="150dp"
+
+                android:inputType="text"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></EditText>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="240dp"
+                android:gravity="center"
+                android:text="Telefono"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></TextView>
+
+            <EditText
+                android:id="@+id/editTxt_NuevoRestaurante_Telefono"
+                android:layout_width="320sp"
+                android:layout_height="50sp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="270dp"
+
+                android:inputType="phone"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></EditText>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="360dp"
+                android:gravity="center"
+                android:text="Correo"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></TextView>
+
+            <EditText
+                android:id="@+id/editTxt_NuevoRestaurante_Correo"
+                android:layout_width="320sp"
+                android:layout_height="50sp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="390dp"
+
+                android:inputType="textEmailAddress"
+                android:textColor="@color/colorText"
+                android:imeOptions="actionDone"
+                android:textSize="23sp"></EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="480dp"
+                android:gravity="center"
+                android:text="Precio"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></TextView>
+
+
+            <Spinner
+                android:id="@+id/spinner_Precio"
+                android:layout_width="120sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="525dp"
+                android:layout_centerHorizontal="true"
+                android:entries="@array/lista_precios"
+                android:prompt="@string/precio_prompt"/>
+
+            <TextView
+                android:id="@+id/txt_agregarUbicacion"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/spinner_Precio"
+                android:layout_centerHorizontal="true"
+                android:textSize="23sp"
+                android:layout_marginTop="40dp">
+
+            </TextView>
+
+
+            <Button
+                android:id="@+id/btn_AgregarUbicacion"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_marginEnd="147dp"
+                android:layout_alignBottom="@id/txt_agregarUbicacion"
+                android:layout_marginBottom="-60sp"
+                android:background="@color/colorPrimary"
+                android:layout_centerHorizontal="true"
+                android:text="Agregar Ubicación"
+                android:textColor="@color/colorText"></Button>
+
+            <ListView
+                android:id="@+id/listView_AgregarHorarios"
+                android:layout_width="320sp"
+                android:layout_height="0sp"
+                android:layout_alignTop="@+id/btn_AgregarUbicacion"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="60dp">
+
+            </ListView>
+
+            <Button
+                android:id="@+id/btn_AgregarHorario"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+
+                android:layout_marginEnd="147dp"
+                android:layout_alignBottom="@id/listView_AgregarHorarios"
+                android:layout_marginBottom="-60sp"
+                android:background="@color/colorPrimary"
+                android:layout_centerHorizontal="true"
+                android:text="Agregar Horario"
+                android:textColor="@color/colorText"></Button>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout_AgregarImagenRestaurante"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/btn_AgregarHorario"
+                android:layout_marginTop="60sp"
+                android:layout_centerHorizontal="true">
+
+                    <GridView
+                        android:id="@+id/gridView_AgregarRestaurante"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="80sp"
+                        android:verticalSpacing="1dp"
+                        android:horizontalSpacing="1dp"
+                        android:gravity="center"
+                        android:stretchMode="none"
+                        android:numColumns="3">
+
+                    </GridView>
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_AgregarImagen"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+
+                android:layout_marginEnd="147dp"
+                android:layout_alignBottom="@id/relativeLayout_AgregarImagenRestaurante"
+                android:layout_marginBottom="-60sp"
+                android:background="@color/colorPrimary"
+                android:layout_centerHorizontal="true"
+                android:text="Agregar Imagen"
+                android:textColor="@color/colorText"></Button>
+
+            <Button
+                android:id="@+id/btn_AgregarRestaurante"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_alignTop="@id/btn_AgregarImagen"
+                android:layout_marginTop="80sp"
+                android:layout_marginBottom="30dp"
+                android:background="@color/colorPrimary"
+                android:layout_centerHorizontal="true"
+                android:text="Agregar Restaurante"
+                android:textColor="@color/colorText"></Button>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35sp"
+        android:gravity="center"
+        android:text="Agregar Restaurante"
+        android:textColor="@color/colorText"
+        android:textSize="30sp"></TextView>
+
+
+</RelativeLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_perfil"
+            android:icon="@drawable/ic_perfil"
+            android:title="Perfil"></item>
+
+        <item
+            android:id="@+id/nav_lista_restaurantes"
+            android:icon="@drawable/ic_lista_restaurantes"
+            android:title="Lista Restaurantes">
+
+        </item>
+        <item
+            android:id="@+id/nav_nuevo_restaurante"
+            android:icon="@drawable/ic_nuevo_restaurante"
+            android:title="Agregar Restaurante">
+
+        </item>
+
+        <item
+            android:id="@+id/nav_buscar_restaurante"
+            android:icon="@drawable/ic_buscar_restaurante"
+            android:title="Buscar Restaurante"></item>
+        <item
+            android:id="@+id/nav_restaurantes_cercanos"
+            android:icon="@drawable/ic_restaurantes_cercanos"
+            android:title="Restaurantes Cercanos"></item>
+
+
+    </group>
+
+</menu>
