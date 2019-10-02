@@ -55,7 +55,7 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
     private TextView txtTipoComidaRestaurante;
     private TextView txtPrecioRestaurante;
     private TextView txtCalificacionRestaurante;
-    private ListView listViewHorarios;
+    private TextView txtMostrarHorarios;
     private ListView listViewComentarios;
     private MapView mapViewUbicacion;
     private EditText editTextComentario;
@@ -86,13 +86,15 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
         btnAgregarImagen = findViewById(R.id.btn_VistaRestaurante_AgregarImagen);
         btnAgregarComentario = findViewById(R.id.btn_VistaRestaurante_AgregarComentario);
         spinnerCalificacion = findViewById(R.id.spinner_Calificar);
-        listViewHorarios = findViewById(R.id.listView_MostrarHorarios);
+        txtMostrarHorarios = findViewById(R.id.txt_MostrarHorarios);
+
         listViewComentarios = findViewById(R.id.listView_MostrarComentarios);
         editTextComentario = findViewById(R.id.editTxt_NuevoComentario);
 
 
         Intent intent = getIntent();
         restaurante = intent.getParcelableExtra("Restaurante");
+        restaurante.cargarComentarios();
         usuario = intent.getParcelableExtra("Usuario");
 
         mostrarDatosRestaurante();
@@ -100,7 +102,6 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
         inicializarBtnCalificar();
         inicializarBtnComentario();
         inicializarBtnImagen();
-        inicializarListaHorarios();
         llenarSpinnerCalifcaciones();
         iniciarlizarMapa(savedInstanceState);
         actualizarListaImagenes();
@@ -118,6 +119,7 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
         txtTipoComidaRestaurante.setText(restaurante.getTipoDeComida());
         txtPrecioRestaurante.setText(restaurante.getPrecio());
         txtCalificacionRestaurante.setText(restaurante.getCalificacion());
+        txtMostrarHorarios.setText(restaurante.getHorario());
 
 
     }
@@ -156,9 +158,13 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onClick(View view) {
                 if(!editTextComentario.getText().toString().isEmpty()) {
-                    restaurante.agregarComentario(editTextComentario.getText().toString(),usuario.getNombre());
-                    actualizarComentarios();
-                    editTextComentario.setText("");
+                    if(restaurante.agregarComentario(editTextComentario.getText().toString(),usuario.getCorreo())){
+                        actualizarComentarios();
+                        editTextComentario.setText("");
+                    }
+                    else
+                        Toast.makeText(getApplicationContext(),"Se ha detectado un error",Toast.LENGTH_SHORT).show();
+
                 }
                 else
                     Toast.makeText(getApplicationContext(),"Comentario vacio",Toast.LENGTH_SHORT).show();
@@ -166,13 +172,7 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
         });
     }
 
-    private void inicializarListaHorarios(){
-        AdaptadorListaHorarios adaptadorListaHorarios = new AdaptadorListaHorarios(getApplicationContext(),restaurante.getHorarios());
-        ViewGroup.LayoutParams layoutParams = listViewHorarios.getLayoutParams();
-        layoutParams.height = 100 * restaurante.getHorarios().size();
-        listViewHorarios.setLayoutParams(layoutParams);
-        listViewHorarios.setAdapter(adaptadorListaHorarios);
-    }
+
 
     private void llenarSpinnerCalifcaciones(){
         List<String> list = new ArrayList<String>();
@@ -236,7 +236,7 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
             int i = 0;
             while(i < restaurante.getComentarios().size()){
                 String comentario = restaurante.getComentarios().get(i).getComentario();
-                height += 250+(comentario.length()/32)*70;
+                height += 250+(comentario.length()/32)*90;
                 i++;
             }
             layoutParams.height = height;

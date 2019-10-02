@@ -140,7 +140,7 @@ public class FragmentFiltros extends Fragment implements AdapterView.OnItemSelec
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentListaRestaurantes(usuario)).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentListaRestaurantes(new ArrayList<Restaurante>(),usuario)).commit();
             }
         });
 

@@ -22,9 +22,13 @@ import com.example.proyectomoviles.Fragments.FragmentListaRestaurantes;
 import com.example.proyectomoviles.Fragments.FragmentNuevoRestaurante;
 import com.example.proyectomoviles.Fragments.FragmentPerfil;
 import com.example.proyectomoviles.Fragments.FragmentRestaurantesCercanos;
+import com.example.proyectomoviles.Objetos.Restaurante;
 import com.example.proyectomoviles.Objetos.Usuario;
 import com.example.proyectomoviles.R;
+import com.example.proyectomoviles.Utils.Connector;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -55,10 +59,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         LinearLayout linearLayout = (LinearLayout) navigationView.getHeaderView(0);
 
-        TextView nombre = (TextView) linearLayout.getChildAt(1);
-        TextView correo = (TextView) linearLayout.getChildAt(2);
 
-        nombre.setText(usuario.getNombre());
+        TextView correo = (TextView) linearLayout.getChildAt(1);
         correo.setText(usuario.getCorreo());
 
         if(usuario.isFromFacebook()){
@@ -74,7 +76,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentListaRestaurantes(usuario)).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentListaRestaurantes(new ArrayList<Restaurante>(),usuario)).commit();
 
 
 
@@ -93,7 +95,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentRestaurantesCercanos()).commit();
                 break;
             case R.id.nav_lista_restaurantes:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentListaRestaurantes(usuario)).commit();
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentListaRestaurantes(new ArrayList<Restaurante>(),usuario)).commit();
                 break;
 
             case R.id.nav_buscar_restaurante:
