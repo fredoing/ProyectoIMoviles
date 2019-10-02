@@ -92,7 +92,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
                 break;
             case R.id.nav_vista_mapa:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentRestaurantesCercanos()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentRestaurantesCercanos(usuario)).commit();
                 break;
             case R.id.nav_lista_restaurantes:
 
