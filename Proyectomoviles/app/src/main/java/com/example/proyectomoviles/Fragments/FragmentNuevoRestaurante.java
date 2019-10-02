@@ -60,7 +60,6 @@ public class FragmentNuevoRestaurante extends Fragment {
     private View view;
     //EditText
     private EditText editTextNombre;
-    private EditText editTextTipoComida;
     private EditText editTextTelefono;
     private EditText editTextCorreo;
 
@@ -88,7 +87,7 @@ public class FragmentNuevoRestaurante extends Fragment {
         gridViewImagenes = view.findViewById(R.id.gridView_AgregarRestaurante);
         spinnerPrecio = view.findViewById(R.id.spinner_Precio);
         editTextNombre = view.findViewById(R.id.editTxt_NuevoRestaurante_Nombre);
-        spinnerTipoDeComida = view.findViewById(R.id.);
+        spinnerTipoDeComida = view.findViewById(R.id.spinner_NuevoRestaurante_TipoComida);
         editTextTelefono = view.findViewById(R.id.editTxt_NuevoRestaurante_Telefono);
         editTextCorreo = view.findViewById(R.id.editTxt_NuevoRestaurante_Correo);
 
@@ -140,29 +139,55 @@ public class FragmentNuevoRestaurante extends Fragment {
             @Override
             public void onClick(View view) {
                 String nombre = editTextNombre.getText().toString();
-                String tipoComida = editTextTipoComida.getText().toString();
                 String telefono = editTextTelefono.getText().toString();
                 String correo = editTextCorreo.getText().toString();
-                if(!nombre.isEmpty() && !tipoComida.isEmpty() && !telefono.isEmpty() && !correo.isEmpty() &&
+                if(!nombre.isEmpty() && !telefono.isEmpty() && !correo.isEmpty() &&
                     ubicacionIniciada && !horarios.isEmpty()){
                     String precio = String.valueOf(spinnerPrecio.getSelectedItem());
                     int numeroPrecio = 0;
+                    int numeroTipoComida =0;
+                    switch (spinnerTipoDeComida.getSelectedItem().toString()){
+                        case "Mexicana":
+                            numeroTipoComida = 1;
+                            break;
+                        case "Casera":
+                            numeroTipoComida = 2;
+                            break;
+                        case "Italiana":
+                            numeroTipoComida = 3;
+                            break;
+                        case "Rapida":
+                            numeroTipoComida = 4;
+                            break;
+                        case "Gourmet":
+                            numeroTipoComida = 5;
+                            break;
+                        case "Caribeña":
+                            numeroTipoComida = 6;
+                            break;
+
+
+
+                    }
                     switch (precio){
                         case "Caro":
                             numeroPrecio = 3;
+                            break;
                         case "Medio":
                             numeroPrecio = 2;
+                            break;
                         case "Barato":
                             numeroPrecio = 1;
+                            break;
                     }
                     int i = 0;
                     String textoHorarios = "";
                     while(i<horarios.size()){
-                        textoHorarios += horarios.get(i).toString()+"\t";
+                        textoHorarios += horarios.get(i).toString()+"\n";
                         i++;
                     }
                     String contacto = "Correo: "+correo+"\n"+"Teléfono: "+telefono;
-                    String[] comandos = {"Agregar Restaurante",nombre,Double.toString(ubicacion.latitude),Double.toString(ubicacion.longitude),contacto,textoHorarios,String.valueOf(numeroPrecio)};
+                    String[] comandos = {"Agregar Restaurante",nombre,Double.toString(ubicacion.latitude),Double.toString(ubicacion.longitude),contacto,textoHorarios,String.valueOf(numeroPrecio),String.valueOf(numeroTipoComida)};
                     Connector connector = new Connector(comandos);
                     connector.execute();
                     try {
@@ -174,7 +199,7 @@ public class FragmentNuevoRestaurante extends Fragment {
                     } catch (TimeoutException e) {
                         e.printStackTrace();
                     }
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentListaRestaurantes(usuario)).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentListaRestaurantes(new ArrayList<Restaurante>(),usuario)).commit();
 
                 }
                 else
@@ -237,6 +262,7 @@ public class FragmentNuevoRestaurante extends Fragment {
                     Uri imageUri = data.getData();
                     imagenesURL.add(imageUri.toString());
                     actualizarGridViewImagenes();
+                    break;
             }
         }
     }

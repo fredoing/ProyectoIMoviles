@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.example.proyectomoviles.BeforeLogin.LoginActivity;
 import com.example.proyectomoviles.BeforeLogin.RegisterActivity;
+import com.example.proyectomoviles.Fragments.FragmentListaRestaurantes;
+import com.example.proyectomoviles.Objetos.Restaurante;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,7 +89,8 @@ public class Connector extends AsyncTask<Void,Void,Void> {
                 RegisterActivity.resultado = resultado;
                 break;
             case "Autentificar Usuario" :
-                url = serverUrl+"user/"+comandos[1]+"/"+comandos[2];;
+                url = serverUrl+"user/"+comandos[1]+"/"+comandos[2];
+                Log.i("Resultados",comandos[1]+comandos[2]);
                 readJsonFromUrl(url);
                 if(json != null){
                     if(json.length() > 0){
@@ -123,7 +126,49 @@ public class Connector extends AsyncTask<Void,Void,Void> {
                     break;
             case "Agregar Restaurante":
                 url =  serverUrl+"newrest/"+comandos[1]+"/"+comandos[2]+"/"+comandos[3]+"/"+comandos[4]
-                        +"/"+comandos[5]+"/"+comandos[6];
+                        +"/"+comandos[5]+"/"+comandos[6]+"/"+comandos[7];
+                readJsonFromUrl(url);
+                if (json == null) {
+                    resultado = false;
+                } else if (json.length() == 0) {
+                    resultado = true;
+                }
+            case "Obtener todos los restaurantes ListView":
+                url = serverUrl+"rests/"+1000000+"/"+0+"/"+0;
+                readJsonFromUrl(url);
+                FragmentListaRestaurantes.jsonArray = json;
+
+
+                break;
+            case "Comentar":
+                url = serverUrl+"comment/"+comandos[1]+"/"+comandos[2]+"/"+comandos[3];
+                readJsonFromUrl(url);
+                if (json == null) {
+                    Restaurante.resultado = false;
+                } else if (json.length() == 0) {
+                    Restaurante.resultado = true;
+                }
+                break;
+            case "Obtener Id Usuario":
+                url = serverUrl+"userid/"+comandos[1];
+                int id = -1;
+                readJsonFromUrl(url);
+                JSONObject jobject = null;
+                try {
+                    jobject = json.getJSONObject(0);
+                    id = jobject.getInt("id");
+                } catch (JSONException e) {
+                    Log.i("Resultados",e.toString());
+                }
+                Restaurante.userID = id;
+                break;
+            case "Obtener Comentarios Restaurante":
+                url = serverUrl+"comments/"+comandos[1];
+                readJsonFromUrl(url);
+                Restaurante.jsonArray = json;
+                break;
+            case "Calificar Restaurnate":
+                url = serverUrl+"califica/"+comandos[1]+"/"+comandos[2]+"/"+comandos[3];
                 readJsonFromUrl(url);
                 if (json == null) {
                     resultado = false;
@@ -131,7 +176,7 @@ public class Connector extends AsyncTask<Void,Void,Void> {
                     resultado = true;
                 }
 
-                break;
+
 
         }
 

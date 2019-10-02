@@ -2,6 +2,7 @@ package com.example.proyectomoviles.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +18,28 @@ import com.example.proyectomoviles.Objetos.Restaurante;
 import com.example.proyectomoviles.Objetos.Usuario;
 import com.example.proyectomoviles.R;
 import com.example.proyectomoviles.Utils.AdaptadorListaRestaurantes;
+import com.example.proyectomoviles.Utils.Connector;
 import com.example.proyectomoviles.VerRestaurante.VistaRestaurante;
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class FragmentListaRestaurantes extends Fragment {
     private View view;
     private ListView listViewRestaurantes;
     private ArrayList<Restaurante> restaurantes = new ArrayList<Restaurante>();
     private Usuario usuario;
+    public static JSONArray jsonArray;
 
-    public FragmentListaRestaurantes(Usuario usuario) {
+    public FragmentListaRestaurantes(ArrayList<Restaurante> restaurantes, Usuario usuario) {
+        this.restaurantes = restaurantes;
         this.usuario = usuario;
     }
 
@@ -39,8 +50,23 @@ public class FragmentListaRestaurantes extends Fragment {
 
         listViewRestaurantes = view.findViewById(R.id.listView_listaRestaurantes);
 
+        if(restaurantes.isEmpty()){
+            String[] comandos = {"Obtener todos los restaurantes ListView"};
+            Connector connector = new Connector(comandos);
+            connector.execute();
+            try {
+                connector.get(20, TimeUnit.SECONDS);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            }
+            cargarDatosJSON();
 
-        cargarDatos();
+        }
+
         inicializarListViewRestaurantes();
 
         return view;
@@ -58,22 +84,32 @@ public class FragmentListaRestaurantes extends Fragment {
         });
     }
 
-    public void cargarDatos(){
-        ArrayList<String> imagenes = new ArrayList<String>();
-        ArrayList<Horario> horarios = new ArrayList<Horario>();
-        horarios.add(new Horario("Lunes","00:00","07:00"));
-        horarios.add(new Horario("Viernes","00:00","07:00"));
+    public void cargarDatosJSON(){
+        int i = 0;
+        Restaurante restaurante;
+       while(jsonArray.length() > i){
+           try {
+               JSONObject object = (JSONObject) jsonArray.get(i);
+               String nombre = object.getString("nombre");
+               Double latitud =object.getDouble("latitud");
+               Double longitud =object.getDouble("longitud");
+               String contacto = object.getString("contacto");
+               String horario = object.getString("horario");
+               String precio = object.getString("precio");
+               double califcacion = object.getDouble("calificacion");
+               String tipoComida = object.getString("tipocom");
+               int id = object.getInt("id");
 
-        Restaurante restaurante = new Restaurante("Frijolitos",new LatLng(9.905744225339994,-84.01266675442456),"Frijoles","7070707","andylfoster@outlook.es","Bajo",horarios,imagenes);
 
-        restaurantes.add(restaurante);
-        restaurantes.add(restaurante);
-        restaurantes.add(restaurante);
-        restaurantes.add(restaurante);
-        restaurantes.add(restaurante);
-        restaurantes.add(restaurante);
-        restaurantes.add(restaurante);
-        restaurantes.add(restaurante);
+               restaurante = new Restaurante(nombre,new LatLng(latitud,longitud),tipoComida,contacto,precio,horario,new ArrayList<String>(),califcacion,id);
+               restaurantes.add(restaurante);
+               i++;
+           } catch (JSONException e) {
+               Log.i("Resultados",e.toString());
+               i = jsonArray.length();
+           }
+
+       }
 
     }
 

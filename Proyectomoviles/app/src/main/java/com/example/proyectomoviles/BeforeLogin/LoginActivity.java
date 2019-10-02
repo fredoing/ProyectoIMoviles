@@ -180,7 +180,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void iniciarSesion(View view){
         String email = txtCorreo.getText().toString();
-        String contrasena = txtCorreo.getText().toString();
+        String contrasena = txtContrasena.getText().toString();
 
         String[] comandos = {"Autentificar Usuario", email,contrasena};
         Connector connector = new Connector(comandos);
