@@ -14,19 +14,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.proyectomoviles.Objetos.Comentario;
 import com.example.proyectomoviles.Objetos.Restaurante;
 import com.example.proyectomoviles.Objetos.Usuario;
 import com.example.proyectomoviles.R;
+import com.example.proyectomoviles.Utils.AdaptadorComentarios;
 import com.example.proyectomoviles.Utils.AdaptadorListaHorarios;
 import com.example.proyectomoviles.Utils.GridImageAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,13 +52,13 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
     //Views
     private ImageView imagePrincipal;
     private TextView txtNombreRestaurante;
-
     private TextView txtTipoComidaRestaurante;
     private TextView txtPrecioRestaurante;
     private TextView txtCalificacionRestaurante;
     private ListView listViewHorarios;
     private ListView listViewComentarios;
     private MapView mapViewUbicacion;
+    private EditText editTextComentario;
     //Buttons
     private Button btnBack;
     private Button btnCalificacion;
@@ -76,7 +80,6 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
         txtTipoComidaRestaurante = findViewById(R.id.txt_vistaRestaurante_TipoComida);
         txtPrecioRestaurante = findViewById(R.id.txt_vistaRestaurante_Precio);
         txtCalificacionRestaurante = findViewById(R.id.txt_vistaRestaurante_Calificacion);
-        listViewHorarios = findViewById(R.id.listView_MostrarHorarios);
         mapViewUbicacion = findViewById(R.id.map_verRestaurante);
         btnBack = findViewById(R.id.btn_vistaRestaurante_back);
         btnCalificacion = findViewById(R.id.btn_AgregarCalificacion);
@@ -85,6 +88,7 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
         spinnerCalificacion = findViewById(R.id.spinner_Calificar);
         listViewHorarios = findViewById(R.id.listView_MostrarHorarios);
         listViewComentarios = findViewById(R.id.listView_MostrarComentarios);
+        editTextComentario = findViewById(R.id.editTxt_NuevoComentario);
 
 
         Intent intent = getIntent();
@@ -99,7 +103,8 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
         inicializarListaHorarios();
         llenarSpinnerCalifcaciones();
         iniciarlizarMapa(savedInstanceState);
-
+        actualizarListaImagenes();
+        actualizarComentarios();
 
 
 
@@ -150,7 +155,13 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
         btnAgregarComentario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(!editTextComentario.getText().toString().isEmpty()) {
+                    restaurante.agregarComentario(editTextComentario.getText().toString(),usuario.getNombre());
+                    actualizarComentarios();
+                    editTextComentario.setText("");
+                }
+                else
+                    Toast.makeText(getApplicationContext(),"Comentario vacio",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -214,6 +225,25 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void actualizarComentarios(){
+        if(!restaurante.getComentarios().isEmpty()){
+            RelativeLayout relativeLayout = findViewById(R.id.relativeLayout_ListaComentarios);
+            relativeLayout.setVisibility(View.VISIBLE);
+
+            AdaptadorComentarios adaptadorComentarios = new AdaptadorComentarios(getApplicationContext(),restaurante.getComentarios());
+
+            ViewGroup.LayoutParams layoutParams = listViewComentarios.getLayoutParams();
+            int height = 0;
+            int i = 0;
+            while(i < restaurante.getComentarios().size()){
+                String comentario = restaurante.getComentarios().get(i).getComentario();
+                height += 250+(comentario.length()/32)*70;
+                i++;
+            }
+            layoutParams.height = height;
+            listViewComentarios.setLayoutParams(layoutParams);
+            listViewComentarios.setAdapter(adaptadorComentarios);
+
+        }
 
     }
 

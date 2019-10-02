@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
 
-                usuario = new Usuario(first_name+last_name,"",email,true);
+                usuario = new Usuario(first_name+" "+last_name,"",email,true);
                 Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                 intent.putExtra("Usuario",usuario);
                 intent.putExtra("Id",id);

@@ -2,10 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_perfil"
-            android:icon="@drawable/ic_perfil"
-            android:title="Perfil"></item>
 
         <item
             android:id="@+id/nav_lista_restaurantes"
@@ -25,9 +21,9 @@
             android:icon="@drawable/ic_buscar_restaurante"
             android:title="Buscar Restaurante"></item>
         <item
-            android:id="@+id/nav_restaurantes_cercanos"
+            android:id="@+id/nav_vista_mapa"
             android:icon="@drawable/ic_restaurantes_cercanos"
-            android:title="Restaurantes Cercanos"></item>
+            android:title="Vista mapa"></item>
 
 
     </group>

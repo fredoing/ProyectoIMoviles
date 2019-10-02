@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.proyectomoviles.Fragments.FragmentFiltros;
 import com.example.proyectomoviles.Fragments.FragmentListaRestaurantes;
 import com.example.proyectomoviles.Fragments.FragmentNuevoRestaurante;
 import com.example.proyectomoviles.Fragments.FragmentPerfil;
@@ -84,18 +85,19 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.nav_perfil:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentPerfil(usuario,id)).commit();
-                break;
             case R.id.nav_nuevo_restaurante:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentNuevoRestaurante(usuario)).commit();
 
                 break;
-            case R.id.nav_restaurantes_cercanos:
+            case R.id.nav_vista_mapa:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentRestaurantesCercanos()).commit();
                 break;
             case R.id.nav_lista_restaurantes:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentListaRestaurantes(usuario)).commit();
+                break;
+
+            case R.id.nav_buscar_restaurante:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentFiltros(usuario)).commit();
                 break;
 
         }

@@ -27,11 +27,15 @@ import com.example.proyectomoviles.Objetos.Restaurante;
 import com.example.proyectomoviles.Objetos.Usuario;
 import com.example.proyectomoviles.R;
 import com.example.proyectomoviles.Utils.AdaptadorListaHorarios;
+import com.example.proyectomoviles.Utils.Connector;
 import com.example.proyectomoviles.Utils.GridImageAdapter;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -52,6 +56,7 @@ public class FragmentNuevoRestaurante extends Fragment {
     private ListView listViewHorarios;
     private GridView gridViewImagenes;
     private Spinner spinnerPrecio;
+    private Spinner spinnerTipoDeComida;
     private View view;
     //EditText
     private EditText editTextNombre;
@@ -83,7 +88,7 @@ public class FragmentNuevoRestaurante extends Fragment {
         gridViewImagenes = view.findViewById(R.id.gridView_AgregarRestaurante);
         spinnerPrecio = view.findViewById(R.id.spinner_Precio);
         editTextNombre = view.findViewById(R.id.editTxt_NuevoRestaurante_Nombre);
-        editTextTipoComida = view.findViewById(R.id.editTxt_NuevoRestaurante_TipoComida);
+        spinnerTipoDeComida = view.findViewById(R.id.);
         editTextTelefono = view.findViewById(R.id.editTxt_NuevoRestaurante_Telefono);
         editTextCorreo = view.findViewById(R.id.editTxt_NuevoRestaurante_Correo);
 
@@ -141,8 +146,34 @@ public class FragmentNuevoRestaurante extends Fragment {
                 if(!nombre.isEmpty() && !tipoComida.isEmpty() && !telefono.isEmpty() && !correo.isEmpty() &&
                     ubicacionIniciada && !horarios.isEmpty()){
                     String precio = String.valueOf(spinnerPrecio.getSelectedItem());
-                    Restaurante restaurante = new Restaurante(nombre,ubicacion,tipoComida,telefono,correo,precio,horarios,imagenesURL);
-                    Log.i("Resultados",restaurante.toString());
+                    int numeroPrecio = 0;
+                    switch (precio){
+                        case "Caro":
+                            numeroPrecio = 3;
+                        case "Medio":
+                            numeroPrecio = 2;
+                        case "Barato":
+                            numeroPrecio = 1;
+                    }
+                    int i = 0;
+                    String textoHorarios = "";
+                    while(i<horarios.size()){
+                        textoHorarios += horarios.get(i).toString()+"\t";
+                        i++;
+                    }
+                    String contacto = "Correo: "+correo+"\n"+"Teléfono: "+telefono;
+                    String[] comandos = {"Agregar Restaurante",nombre,Double.toString(ubicacion.latitude),Double.toString(ubicacion.longitude),contacto,textoHorarios,String.valueOf(numeroPrecio)};
+                    Connector connector = new Connector(comandos);
+                    connector.execute();
+                    try {
+                        connector.get(20, TimeUnit.SECONDS);
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (TimeoutException e) {
+                        e.printStackTrace();
+                    }
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentListaRestaurantes(usuario)).commit();
 
                 }

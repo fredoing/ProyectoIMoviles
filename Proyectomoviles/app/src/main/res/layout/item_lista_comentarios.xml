@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/text_listaComentarios_NombreUsuario"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:textColor="@color/colorText"/>
 
     <TextView
         android:id="@+id/text_listaComentarios_Comentario"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/text_listaComentarios_NombreUsuario"
+        android:layout_marginTop="35sp"
+        android:layout_marginBottom="15sp"
+        android:layout_marginStart="20sp"
+        android:textSize="20sp"
+        android:textColor="@color/colorText"
+       />
 </RelativeLayout>

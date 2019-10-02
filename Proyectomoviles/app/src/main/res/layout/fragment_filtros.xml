@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35sp"
+        android:gravity="center"
+        android:text="Buscar restaurante"
+        android:textColor="@color/colorText"
+        android:textSize="30sp"></TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="120dp"
+        android:gravity="center"
+        android:text="Tipo Filtro"
+        android:textColor="@color/colorText"
+        android:textSize="23sp"></TextView>
+
+    <Spinner
+        android:id="@+id/spinner_TipoFiltro"
+        android:layout_width="160dp"
+        android:layout_height="35sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="120dp"
+        android:entries="@array/lista_filtros">
+
+    </Spinner>
+    <RelativeLayout
+        android:id="@+id/relativeLayout_AgregarFiltro"
+        android:layout_width="match_parent"
+        android:layout_height="150sp"
+        android:layout_alignTop="@+id/spinner_TipoFiltro"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60sp">
+        <RelativeLayout
+            android:id="@+id/relativeLayout_AgregarFiltro_EditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <EditText
+                android:id="@+id/editTxt_AgregarFiltro"
+                android:layout_width="320sp"
+                android:layout_height="50sp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:visibility="visible"
+
+                android:inputType="text"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textSize="23sp"
+                android:text="Ingrese el nombre"></TextView>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/relativeLayout_AgregarFiltro_Ubicacion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="50dp"
+                android:gravity="center"
+                android:text="Distancia"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></TextView>
+            <TextView
+                android:id="@+id/text_coordenadas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60sp"
+                android:layout_centerHorizontal="true"
+                android:textSize="23sp"></TextView>
+            <Button
+                android:id="@+id/btn_buscar_AgregarUbicacion"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:background="@color/colorPrimary"
+                android:layout_centerHorizontal="true"
+                android:layout_alignBottom="@+id/text_coordenadas"
+                android:layout_marginBottom="-50sp"
+                android:text="Agregar Ubicación"
+                android:textColor="@color/colorText"
+                ></Button>
+            <EditText
+                android:id="@+id/editTxt_AgregarDistancia"
+                android:layout_width="160sp"
+                android:hint="En metros"
+                android:layout_height="50sp"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="200sp"
+                android:inputType="numberDecimal"
+                android:textColor="@color/colorText"
+                android:textSize="23sp"></EditText>
+
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout_AgregarFiltro_Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible">
+
+            <TextView
+                android:id="@+id/txt_relativeLayout_Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textSize="23sp"
+                android:text="Ingrese el nombre"></TextView>
+
+            <Spinner
+                android:id="@+id/spinner_Filtro"
+                android:layout_width="160dp"
+                android:layout_height="35sp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                />
+
+        </RelativeLayout>
+
+
+
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/btn_buscar_AgregarFiltro"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:background="@color/colorPrimary"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/relativeLayout_AgregarFiltro"
+        android:layout_marginBottom="-75sp"
+        android:text="Agregar Filtro"
+        android:textColor="@color/colorText"></Button>
+
+    <ListView
+        android:id="@+id/listView_Filtros"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="420sp"
+        android:layout_marginBottom="110sp"/>
+
+    <Button
+        android:id="@+id/btn_buscar_BuscarRestaurante"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:background="@color/colorPrimary"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40sp"
+        android:text="Buscar"
+        android:textColor="@color/colorText"></Button>
+
+</RelativeLayout>

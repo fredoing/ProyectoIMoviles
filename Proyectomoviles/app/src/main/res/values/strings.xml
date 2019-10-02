@@ -24,4 +24,21 @@
         <item>Barato</item>
     </string-array>
 
+    <string-array name="lista_filtros">
+        <item>Nombre</item>
+        <item>Calificación</item>
+        <item>Precio</item>
+        <item>Ubicación</item>
+        <item>Tipo de Comida</item>
+    </string-array>
+
+    <string-array name="lista_tiposDeComida">
+        <item>Mexicana</item>
+        <item>Casera</item>
+        <item>Italiana</item>
+        <item>Rapida</item>
+        <item>Gourmet</item>
+        <item>Caribeña</item>
+    </string-array>
+
 </resources>

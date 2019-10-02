@@ -182,15 +182,37 @@
                 android:text="Agregar Imagen"
                 android:textColor="@color/colorText"></Button>
 
+            <RelativeLayout
+                android:id="@+id/relativeLayout_ListaComentarios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/btn_VistaRestaurante_AgregarImagen"
+                android:layout_marginTop="55dp"
+                android:visibility="invisible"
+                >
+                <TextView
+                    android:id="@+id/txt_ListaComentaios"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:gravity="center"
+                    android:text="Comentarios"
+                    android:textColor="@color/colorText"
+                    android:textSize="23sp"
+                    android:layout_marginStart="35dp"></TextView>
+
+                <ListView
+                    android:id="@+id/listView_MostrarComentarios"
+                    android:layout_width="320sp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="40sp"
+                    android:scrollbars="none"
+                    />
+            </RelativeLayout>
 
 
-            <ListView
-                android:id="@+id/listView_MostrarComentarios"
-                android:layout_width="320sp"
-                android:layout_height="0sp"
-                android:layout_alignBottom="@+id/btn_VistaRestaurante_AgregarImagen"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="-35dp"/>
 
             <TextView
                 android:id="@+id/txt_NuevoComentario"
@@ -198,8 +220,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="35dp"
-                android:layout_alignBottom="@id/listView_MostrarComentarios"
-                android:layout_marginBottom="-25dp"
+                android:layout_alignBottom="@id/relativeLayout_ListaComentarios"
+                android:layout_marginBottom="-60dp"
                 android:gravity="center"
                 android:text="Nuevo Comentario"
                 android:textColor="@color/colorText"

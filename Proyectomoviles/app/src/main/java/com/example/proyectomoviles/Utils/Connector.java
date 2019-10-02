@@ -46,14 +46,17 @@ public class Connector extends AsyncTask<Void,Void,Void> {
     private void readJsonFromUrl(String url) {
         InputStream is = null;
         try {
+
             URL tempurl = new URL(url);
             URLConnection conn = tempurl.openConnection();
             is = conn.getInputStream();
+
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
             String jsonText = readAll(rd);
             json = new JSONArray(jsonText);
             is.close();
         } catch (Exception e) {
+            Log.i("Resultados",e.toString());
             resultado = false;
         }
     }
@@ -90,6 +93,7 @@ public class Connector extends AsyncTask<Void,Void,Void> {
                     if(json.length() > 0){
                         try {
                             JSONObject jobject = json.getJSONObject(0);
+                            Log.i("Resultados",String.valueOf(jobject.getBoolean("passed")));
                             if (jobject.getBoolean("passed")) {
                                 resultado = true;
                             }
@@ -101,7 +105,7 @@ public class Connector extends AsyncTask<Void,Void,Void> {
                 LoginActivity.resultado = resultado;
                 break;
             case "Autentificar Usuario F" :
-                url = serverUrl+"facebookuser/"+comandos[1]+"/"+comandos[2];;
+                url = serverUrl+"facebookuser/"+comandos[1]+"/"+comandos[2];
                 readJsonFromUrl(url);
                 if(json != null){
                     if(json.length() > 0){
@@ -117,6 +121,18 @@ public class Connector extends AsyncTask<Void,Void,Void> {
                 }
                     LoginActivity.resultado = resultado;
                     break;
+            case "Agregar Restaurante":
+                url =  serverUrl+"newrest/"+comandos[1]+"/"+comandos[2]+"/"+comandos[3]+"/"+comandos[4]
+                        +"/"+comandos[5]+"/"+comandos[6];
+                readJsonFromUrl(url);
+                if (json == null) {
+                    resultado = false;
+                } else if (json.length() == 0) {
+                    resultado = true;
+                }
+
+                break;
+
         }
 
         return null;
