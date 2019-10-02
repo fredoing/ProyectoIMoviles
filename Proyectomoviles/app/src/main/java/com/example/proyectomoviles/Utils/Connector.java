@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.proyectomoviles.BeforeLogin.LoginActivity;
 import com.example.proyectomoviles.BeforeLogin.RegisterActivity;
 import com.example.proyectomoviles.Fragments.FragmentListaRestaurantes;
+import com.example.proyectomoviles.Fragments.FragmentRestaurantesCercanos;
 import com.example.proyectomoviles.Objetos.Restaurante;
 
 import org.json.JSONArray;
@@ -140,6 +141,12 @@ public class Connector extends AsyncTask<Void,Void,Void> {
 
 
                 break;
+            case "Obtener todos los restaurantes MapView":
+                url = serverUrl+"rests/"+1000000+"/"+0+"/"+0;
+                readJsonFromUrl(url);
+                FragmentRestaurantesCercanos.jsonArray = json;
+
+                break;
             case "Comentar":
                 url = serverUrl+"comment/"+comandos[1]+"/"+comandos[2]+"/"+comandos[3];
                 readJsonFromUrl(url);
@@ -175,7 +182,19 @@ public class Connector extends AsyncTask<Void,Void,Void> {
                 } else if (json.length() == 0) {
                     resultado = true;
                 }
-
+            case "Recuperar Contraseña":
+                url = serverUrl+"recover/"+comandos[1];
+                readJsonFromUrl(url);
+                try {
+                    JSONObject jsono = json.getJSONObject(0);
+                    if (jsono.getBoolean("enviado")) {
+                        resultado = true;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    resultado = false;
+                }
+                LoginActivity.resultado = resultado;
 
 
         }

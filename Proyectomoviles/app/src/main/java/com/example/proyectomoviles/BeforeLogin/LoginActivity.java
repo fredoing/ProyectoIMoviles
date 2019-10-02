@@ -195,7 +195,7 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         if(resultado) {
-            usuario = new Usuario("Andy Foster", txtCorreo.getText().toString(), txtContrasena.getText().toString(), false);
+            usuario = new Usuario("", txtCorreo.getText().toString(), txtContrasena.getText().toString(), false);
             Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("Usuario", usuario);
@@ -204,5 +204,33 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
             Toast.makeText(getApplicationContext(),"Usuario no válido",Toast.LENGTH_LONG).show();
+    }
+
+    public void recuperarContrasena(View view){
+        if(!txtCorreo.getText().toString().isEmpty()){
+            String email = txtCorreo.getText().toString();
+            String[] comandos = {"Recuperar Contraseña", email};
+            Connector connector = new Connector(comandos);
+            connector.execute();
+            try {
+                connector.get(20, TimeUnit.SECONDS);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            }
+
+            if(resultado)
+                Toast.makeText(getApplicationContext(),"Se ha enviado tu contraseña a tu correo",Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(getApplicationContext(),"Se ha detectado un error",Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"Debe introducir un correo",Toast.LENGTH_LONG).show();
+        }
+
+
     }
 }
