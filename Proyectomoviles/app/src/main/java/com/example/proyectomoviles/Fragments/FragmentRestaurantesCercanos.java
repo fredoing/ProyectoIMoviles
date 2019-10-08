@@ -1,10 +1,13 @@
 package com.example.proyectomoviles.Fragments;
 
+import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,11 +17,17 @@ import com.example.proyectomoviles.Objetos.Restaurante;
 import com.example.proyectomoviles.Objetos.Usuario;
 import com.example.proyectomoviles.R;
 import com.example.proyectomoviles.Utils.Connector;
+import com.example.proyectomoviles.VerRestaurante.VistaRestaurante;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,13 +38,14 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-public class FragmentRestaurantesCercanos extends Fragment implements OnMapReadyCallback {
+public class FragmentRestaurantesCercanos extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private MapView mMapView;
     private Usuario usuario;
     private GoogleMap myMap;
     public static JSONArray jsonArray;
     private ArrayList<Restaurante> restaurantes = new ArrayList<Restaurante>();
+    private FusedLocationProviderClient fusedLocationClient;
 
     public FragmentRestaurantesCercanos(Usuario usuario) {
         this.usuario = usuario;
@@ -63,6 +73,8 @@ public class FragmentRestaurantesCercanos extends Fragment implements OnMapReady
         cargarDatosJSON();
 
         iniciarlizarMapa(savedInstanceState);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
 
 
@@ -113,11 +125,31 @@ public class FragmentRestaurantesCercanos extends Fragment implements OnMapReady
     }
 
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(final GoogleMap map) {
+        map.setOnMarkerClickListener(this);
         for(Restaurante restaurante: restaurantes){
-            map.addMarker(new MarkerOptions().position(restaurante.getUbicacion()).title(restaurante.getNombre()));
+
+            Marker marker = map.addMarker(new MarkerOptions().position(restaurante.getUbicacion()).title(restaurante.getNombre()));
+            marker.setTag(restaurante);
         }
         map.setMyLocationEnabled(true);
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+
+                        if (location != null) {
+                            LatLng posActual = new LatLng(location.getLatitude(),  location.getLongitude());
+                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(posActual,17));
+                        }
+                        else{
+                            Toast.makeText(getContext(),"GPS desactivado",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+
     }
 
     @Override
@@ -151,8 +183,10 @@ public class FragmentRestaurantesCercanos extends Fragment implements OnMapReady
                 String contacto = object.getString("contacto");
                 String horario = object.getString("horario");
                 String precio = object.getString("precio");
+                precio = precio.toUpperCase().charAt(0)+precio.substring(1);
                 double califcacion = object.getDouble("calificacion");
                 String tipoComida = object.getString("tipocom");
+                tipoComida = tipoComida.toUpperCase().charAt(0)+tipoComida.substring(1);
                 int id = object.getInt("id");
 
 
@@ -167,4 +201,20 @@ public class FragmentRestaurantesCercanos extends Fragment implements OnMapReady
         }
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        Restaurante restaurante =(Restaurante) marker.getTag();
+        mostrarRestaurante(restaurante);
+
+
+        return false;
+    }
+
+    private void mostrarRestaurante(Restaurante restaurante){
+        Intent intent = new Intent(getContext(), VistaRestaurante.class);
+        intent.putExtra("Restaurante",restaurante);
+        intent.putExtra("Usuario",usuario);
+        startActivity(intent);
+    }
 }

@@ -32,6 +32,7 @@ public class Restaurante implements Parcelable {
     public static boolean resultado;
     public static int userID;
     public static JSONArray jsonArray;
+    public static Double nuevaCalificacion = -1.0;
 
     public Restaurante(String nombre, LatLng ubicacion, String tipoDeComida,String contacto, String precio, String horario, ArrayList<String> imagenesURL,Double calificacion,int id) {
         this.nombre = nombre;
@@ -80,7 +81,7 @@ public class Restaurante implements Parcelable {
         imagenesURL.add(imagenUrl);
     }
     
-    public boolean agregarCalificacion(int nuevaCalificacion, String correoAutor){
+    public String agregarCalificacion(int nuevaCalificacion, String correoAutor){
         String[] comandosGetUserId = {"Obtener Id Usuario",correoAutor};
         Connector connectorGetUserId = new Connector(comandosGetUserId);
         connectorGetUserId.execute();
@@ -108,11 +109,27 @@ public class Restaurante implements Parcelable {
                 e.printStackTrace();
             }
         }
-        else
-            return false;
 
-        return resultado;
+       /* String[] comandos= {"Obtener Calificación",String.valueOf(id)};
+        Connector connector = new Connector(comandos);
+        connector.execute();
+        try {
+            connector.get(20, TimeUnit.SECONDS);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        if(nuevaCalificacion ==0){
+            return "0.0";
+        }
+        DecimalFormat formato = new DecimalFormat("#.0");
+        return formato.format(nuevaCalificacion);*/
 
+
+        return "";
     }
     public void cargarComentarios(){
         String[] comandos= {"Obtener Comentarios Restaurante",String.valueOf(id)};

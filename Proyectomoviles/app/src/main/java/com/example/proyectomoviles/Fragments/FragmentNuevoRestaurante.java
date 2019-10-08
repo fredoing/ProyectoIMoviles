@@ -4,13 +4,19 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -54,10 +60,10 @@ public class FragmentNuevoRestaurante extends Fragment {
     //Views
     private TextView textUbicacion;
     private ListView listViewHorarios;
-    private GridView gridViewImagenes;
     private Spinner spinnerPrecio;
     private Spinner spinnerTipoDeComida;
     private View view;
+    GridView gridViewImagenes;
     //EditText
     private EditText editTextNombre;
     private EditText editTextTelefono;
@@ -84,20 +90,20 @@ public class FragmentNuevoRestaurante extends Fragment {
         btnAgregar = view.findViewById(R.id.btn_AgregarRestaurante);
         textUbicacion = view.findViewById(R.id.txt_agregarUbicacion);
         listViewHorarios = view.findViewById(R.id.listView_AgregarHorarios);
-        gridViewImagenes = view.findViewById(R.id.gridView_AgregarRestaurante);
         spinnerPrecio = view.findViewById(R.id.spinner_Precio);
         editTextNombre = view.findViewById(R.id.editTxt_NuevoRestaurante_Nombre);
         spinnerTipoDeComida = view.findViewById(R.id.spinner_NuevoRestaurante_TipoComida);
         editTextTelefono = view.findViewById(R.id.editTxt_NuevoRestaurante_Telefono);
         editTextCorreo = view.findViewById(R.id.editTxt_NuevoRestaurante_Correo);
+        gridViewImagenes = view.findViewById(R.id.gridView_AgregarRestaurante);
 
 
         inicializarBtnUbicacion();
         inicializarBtnHorario();
         inicializarBtnImagen();
         inicializarBtnAgregar();
-        configurarGridView();
 
+        registerForContextMenu(gridViewImagenes);
 
         return view;
     }
@@ -118,6 +124,7 @@ public class FragmentNuevoRestaurante extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), AgregarHorario.class );
+                intent.putParcelableArrayListExtra("Horarios",horarios);
                 startActivityForResult(intent,codigoHorario);
             }
         });
@@ -220,24 +227,37 @@ public class FragmentNuevoRestaurante extends Fragment {
 
     }
     
-    public void configurarGridView(){
-        int gridWidth = getResources().getDisplayMetrics().widthPixels;
-        int imageWidth = gridWidth/4;
-        gridViewImagenes.setColumnWidth(imageWidth);
 
 
-
-    }
-
-    public void actualizarGridViewImagenes(){
+    private void actualizarListaImagenes(){
         GridImageAdapter adapter = new GridImageAdapter(getContext(),R.layout.layout_grid_imageview,"",imagenesURL);
-        ViewGroup.LayoutParams layoutParams = gridViewImagenes.getLayoutParams();
-
-
         gridViewImagenes.setAdapter(adapter);
-        int layoutHeight = (((imagenesURL.size()-1)/3)+1) *300;
-        layoutParams.height = layoutHeight;
-        gridViewImagenes.setLayoutParams(layoutParams);
+
+        if(!imagenesURL.isEmpty()){
+
+
+            DisplayMetrics dm = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+            float density = dm.density;
+            int imageWidth = 200;
+            int gridViewImagenesWidth = (int) (imageWidth * imagenesURL.size() * density);
+            int itemWidth = (int) (imageWidth * density);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(gridViewImagenesWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+            gridViewImagenes.setLayoutParams(params);
+            gridViewImagenes.setNumColumns(imagenesURL.size());
+            gridViewImagenes.setHorizontalSpacing(2);
+            gridViewImagenes.setStretchMode(GridView.STRETCH_SPACING);
+            gridViewImagenes.setColumnWidth(itemWidth);
+        }
+        else {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
+            gridViewImagenes.setLayoutParams(params);
+            gridViewImagenes.setNumColumns(0);
+            gridViewImagenes.setHorizontalSpacing(0);
+            gridViewImagenes.setColumnWidth(0);
+        }
+
     }
 
     @Override
@@ -261,9 +281,32 @@ public class FragmentNuevoRestaurante extends Fragment {
                 case codigoImagen:
                     Uri imageUri = data.getData();
                     imagenesURL.add(imageUri.toString());
-                    actualizarGridViewImagenes();
+                    actualizarListaImagenes();
                     break;
             }
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getActivity().getMenuInflater().inflate(R.menu.eliminar_menu,menu);
+
+    }
+
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()){
+            case R.id.opcionEliminar:
+                imagenesURL.remove(info.position);
+                actualizarListaImagenes();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+
     }
 }

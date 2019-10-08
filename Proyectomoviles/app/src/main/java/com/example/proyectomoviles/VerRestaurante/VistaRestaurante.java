@@ -41,6 +41,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +51,8 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
     private Restaurante restaurante;
     private Usuario usuario;
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+    public static  JSONArray jsonArray;
+
     //Views
     private ImageView imagePrincipal;
     private TextView txtNombreRestaurante;

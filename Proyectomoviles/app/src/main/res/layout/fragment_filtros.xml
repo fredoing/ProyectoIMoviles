@@ -105,7 +105,7 @@
             <EditText
                 android:id="@+id/editTxt_AgregarDistancia"
                 android:layout_width="160sp"
-                android:hint="En metros"
+                android:hint="En kilómetros"
                 android:layout_height="50sp"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="200sp"
@@ -165,7 +165,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="420sp"
+        android:layout_marginTop="445sp"
         android:layout_marginBottom="110sp"/>
 
     <Button
@@ -174,8 +174,8 @@
         android:layout_height="45dp"
         android:background="@color/colorPrimary"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="40sp"
+        android:layout_alignTop="@id/btn_buscar_AgregarFiltro"
+        android:layout_marginTop="290sp"
         android:text="Buscar"
         android:textColor="@color/colorText"></Button>
 

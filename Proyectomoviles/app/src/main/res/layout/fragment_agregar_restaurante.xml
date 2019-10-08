@@ -55,7 +55,7 @@
 
             <Spinner
                 android:id="@+id/spinner_NuevoRestaurante_TipoComida"
-                android:layout_width="120sp"
+                android:layout_width="270sp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="180dp"
@@ -187,14 +187,19 @@
                 android:text="Agregar Horario"
                 android:textColor="@color/colorText"></Button>
 
-            <RelativeLayout
-                android:id="@+id/relativeLayout_AgregarImagenRestaurante"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalView"
                 android:layout_alignTop="@id/btn_AgregarHorario"
                 android:layout_marginTop="60sp"
-                android:layout_centerHorizontal="true">
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:fillViewport="false">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
                     <GridView
                         android:id="@+id/gridView_AgregarRestaurante"
                         android:layout_centerHorizontal="true"
@@ -209,7 +214,11 @@
 
                     </GridView>
 
-            </RelativeLayout>
+                </LinearLayout>
+
+
+
+            </HorizontalScrollView>
 
 
             <Button
@@ -218,7 +227,7 @@
                 android:layout_height="45dp"
 
                 android:layout_marginEnd="147dp"
-                android:layout_alignBottom="@id/relativeLayout_AgregarImagenRestaurante"
+                android:layout_alignBottom="@id/horizontalView"
                 android:layout_marginBottom="-60sp"
                 android:background="@color/colorPrimary"
                 android:layout_centerHorizontal="true"

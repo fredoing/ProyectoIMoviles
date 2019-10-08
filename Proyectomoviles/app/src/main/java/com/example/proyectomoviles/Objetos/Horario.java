@@ -40,6 +40,22 @@ public class Horario implements Parcelable {
 
         return true;
     }
+
+    public boolean isHorarioAntes(Horario anotherHorario){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        try {
+            Date thisFechaFin = sdf.parse(this.horaFin);
+            Date anotherFechaInicio = sdf.parse(anotherHorario.horaInicio);
+
+            if(thisFechaFin.before(anotherFechaInicio))
+                return true;
+            else
+                return false;
+        } catch (ParseException e) {
+            return false;
+        }
+
+    }
     public boolean comprobarChoque(Horario anotherHorario){
         if(anotherHorario.getDia().equals(this.dia)){
 
