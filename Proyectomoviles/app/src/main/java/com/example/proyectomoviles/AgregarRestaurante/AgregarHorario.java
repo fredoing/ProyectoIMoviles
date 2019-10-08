@@ -1,5 +1,6 @@
 package com.example.proyectomoviles.AgregarRestaurante;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,7 +8,10 @@ import android.media.Image;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -20,10 +24,14 @@ import com.example.proyectomoviles.Utils.AdaptadorListaHorarios;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AgregarHorario extends AppCompatActivity {
+    //Variables
+    private static final List<String> dias = Arrays.asList("Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo");
     //Botones
     private Button btnAtras;
     private Button btnAgregar;
@@ -35,7 +43,7 @@ public class AgregarHorario extends AppCompatActivity {
     private Spinner spinnerHorasFin;
     private Spinner spinnerMinutosFin;
     //Atributos
-    private ArrayList<Horario> horarios = new ArrayList<Horario>();
+    private ArrayList<Horario> horarios;
     //Vistas
     private ListView listViewHorarios;
 
@@ -54,6 +62,10 @@ public class AgregarHorario extends AppCompatActivity {
         spinnerHorasFin = findViewById(R.id.spinner_horaFin);
         spinnerMinutosFin = findViewById(R.id.spinner_minutoFin);
 
+        Intent intent = getIntent();
+        horarios = intent.getParcelableArrayListExtra("Horarios");
+        actualizarListaHorarios();
+
         llenarSpinnerHoras();
         llenarSpinnerMinutos();
 
@@ -64,6 +76,8 @@ public class AgregarHorario extends AppCompatActivity {
         inicializarBotonAtras();
         inicializarBotonAgregar();
         inicializarBotonTerminar();
+
+        registerForContextMenu(listViewHorarios);
     }
 
     private  void inicializarBotonAtras(){
@@ -96,7 +110,7 @@ public class AgregarHorario extends AppCompatActivity {
                         i++;
                     }
                     if(!choqueHorarios){
-                        horarios.add(horario);
+                        agregarHorario(horario);
                         actualizarListaHorarios();
                     }
                     else
@@ -163,5 +177,62 @@ public class AgregarHorario extends AppCompatActivity {
     private void actualizarListaHorarios(){
         AdaptadorListaHorarios adaptadorListaHorarios = new AdaptadorListaHorarios(getApplicationContext(),horarios);
         listViewHorarios.setAdapter(adaptadorListaHorarios);
+    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if(v.getId() == R.id.listView_NuevosHorarios){
+            getMenuInflater().inflate(R.menu.eliminar_menu,menu);
+        }
+
+    }
+
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()){
+            case R.id.opcionEliminar:
+                horarios.remove(info.position);
+                actualizarListaHorarios();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+
+    }
+
+    private void agregarHorario(Horario horario){
+       if(!horarios.isEmpty()){
+           int i = 0;
+           boolean horarioAgregado = false;
+           while(i<horarios.size() && !horarioAgregado){
+
+               if(dias.indexOf(horario.getDia()) < dias.indexOf(horarios.get(i).getDia())){
+                   horarios.add(i,horario);
+                   horarioAgregado = true;
+               }
+               else{
+                   if(dias.indexOf(horario.getDia()) == dias.indexOf(horarios.get(i).getDia())){
+                        if(horario.isHorarioAntes(horarios.get(i))){
+                           horarios.add(i,horario);
+                           horarioAgregado = true;
+                       }
+
+                   }
+
+               }
+            i++;
+           }
+
+           if(!horarioAgregado)
+               horarios.add(horario);
+       }
+       else
+           horarios.add(horario);
+
     }
 }

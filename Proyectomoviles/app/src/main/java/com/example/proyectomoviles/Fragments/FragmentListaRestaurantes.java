@@ -96,8 +96,10 @@ public class FragmentListaRestaurantes extends Fragment {
                String contacto = object.getString("contacto");
                String horario = object.getString("horario");
                String precio = object.getString("precio");
+               precio = precio.toUpperCase().charAt(0)+precio.substring(1);
                double califcacion = object.getDouble("calificacion");
                String tipoComida = object.getString("tipocom");
+               tipoComida = tipoComida.toUpperCase().charAt(0)+tipoComida.substring(1);
                int id = object.getInt("id");
 
 

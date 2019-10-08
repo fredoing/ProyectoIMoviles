@@ -5,9 +5,11 @@ import android.util.Log;
 
 import com.example.proyectomoviles.BeforeLogin.LoginActivity;
 import com.example.proyectomoviles.BeforeLogin.RegisterActivity;
+import com.example.proyectomoviles.Fragments.FragmentFiltros;
 import com.example.proyectomoviles.Fragments.FragmentListaRestaurantes;
 import com.example.proyectomoviles.Fragments.FragmentRestaurantesCercanos;
 import com.example.proyectomoviles.Objetos.Restaurante;
+import com.example.proyectomoviles.VerRestaurante.VistaRestaurante;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -135,16 +137,25 @@ public class Connector extends AsyncTask<Void,Void,Void> {
                     resultado = true;
                 }
             case "Obtener todos los restaurantes ListView":
-                url = serverUrl+"rests/"+1000000+"/"+0+"/"+0;
+                url = serverUrl+"allrests";
+
+
                 readJsonFromUrl(url);
                 FragmentListaRestaurantes.jsonArray = json;
 
 
                 break;
             case "Obtener todos los restaurantes MapView":
-                url = serverUrl+"rests/"+1000000+"/"+0+"/"+0;
+                url = serverUrl+"allrests";
                 readJsonFromUrl(url);
                 FragmentRestaurantesCercanos.jsonArray = json;
+
+                break;
+            case "Obtener todos los restaurantes Filtro":
+                url = serverUrl+"rests/"+comandos[1]+"/"+comandos[2]+"/"+comandos[3];
+                Log.i("Resultados",url);
+                readJsonFromUrl(url);
+                FragmentFiltros.jsonArray = json;
 
                 break;
             case "Comentar":
@@ -195,12 +206,31 @@ public class Connector extends AsyncTask<Void,Void,Void> {
                     resultado = false;
                 }
                 LoginActivity.resultado = resultado;
+                break;
+            case "Obtener Imagenes":
+                url = serverUrl+"getimgs/"+comandos[1];
+                readJsonFromUrl(url);
+                VistaRestaurante.jsonArray = json;
+                break;
+            case"Obtener Calificación":
+                url = serverUrl+"getrestcall/"+comandos[1];
+                readJsonFromUrl(url);
+                try {
+                    jobject = json.getJSONObject(0);
+                    Restaurante.nuevaCalificacion =  jobject.getDouble("calificacion");
+                } catch (JSONException e) {
+                    Log.i("Resultados",e.toString());
+                }
+
+                break;
 
 
         }
 
         return null;
     }
+
+
 
 
 

@@ -30,7 +30,6 @@ public class MapGetUbicacionRestaurante extends AppCompatActivity implements OnM
     private Button btnAtras;
     private Button btnVerificar;
     private GoogleMap mMap;
-    private ImageView imgMarker;
     private FusedLocationProviderClient fusedLocationClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,6 @@ public class MapGetUbicacionRestaurante extends AppCompatActivity implements OnM
         btnAtras = findViewById(R.id.btn_volverGetUbicaion);
         btnVerificar = findViewById(R.id.btn_SeleccionarUbicacion);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        imgMarker = findViewById(R.id.img_marker);
 
         iniciarlizarMapa(savedInstanceState);
         inicializarBotonAtras();
@@ -123,7 +121,6 @@ public class MapGetUbicacionRestaurante extends AppCompatActivity implements OnM
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
-        map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
