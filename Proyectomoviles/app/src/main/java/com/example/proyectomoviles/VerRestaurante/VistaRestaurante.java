@@ -32,6 +32,7 @@ import com.example.proyectomoviles.Objetos.Usuario;
 import com.example.proyectomoviles.R;
 import com.example.proyectomoviles.Utils.AdaptadorComentarios;
 import com.example.proyectomoviles.Utils.AdaptadorListaHorarios;
+import com.example.proyectomoviles.Utils.Connector;
 import com.example.proyectomoviles.Utils.GridImageAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -42,9 +43,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCallback {
     //Variables
@@ -119,6 +125,8 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
         if(!restaurante.getImagenesURL().isEmpty()){
             imagePrincipal.setImageURI(Uri.parse(restaurante.getImagenesURL().get(0)));
         }
+
+
         txtNombreRestaurante.setText(restaurante.getNombre());
         txtTipoComidaRestaurante.setText(restaurante.getTipoDeComida());
         txtPrecioRestaurante.setText(restaurante.getPrecio());
@@ -135,6 +143,8 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
             }
         });
     }
+
+
 
     public void inicializarBtnImagen(){
         btnAgregarImagen.setOnClickListener(new View.OnClickListener() {
@@ -204,7 +214,7 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void actualizarListaImagenes(){
-
+        cargarImagenes();
         if(!restaurante.getImagenesURL().isEmpty()){
             HorizontalScrollView horizontalScrollView = findViewById(R.id.horizontalView);
             GridView gridView = findViewById(R.id.gridView_VistaRestaurante);
@@ -226,6 +236,41 @@ public class VistaRestaurante extends AppCompatActivity implements OnMapReadyCal
             gridView.setColumnWidth(itemWidth);
             gridView.setAdapter(adapter);
         }
+    }
+
+    public void cargarDatosJSON(){
+        int i = 0;
+        while(jsonArray.length() > i){
+            try {
+                JSONObject object = (JSONObject) jsonArray.get(i);
+                String ruta = object.getString("ruta");
+
+                restaurante.getImagenesURL().add(ruta);
+                i++;
+            } catch (JSONException e) {
+                Log.i("Resultados",e.toString());
+                i = jsonArray.length();
+            }
+
+        }
+
+    }
+
+    private void cargarImagenes(){
+        String[] comandos = {"Obtener Imagenes",String.valueOf(restaurante.getId())};
+        Connector connector = new Connector(comandos);
+        connector.execute();
+        try {
+            connector.get(20, TimeUnit.SECONDS);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+
+        cargarDatosJSON();
     }
 
     private void actualizarComentarios(){

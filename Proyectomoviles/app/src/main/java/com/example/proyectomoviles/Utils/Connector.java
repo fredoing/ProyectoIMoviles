@@ -1,5 +1,6 @@
 package com.example.proyectomoviles.Utils;
 
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -213,15 +214,26 @@ public class Connector extends AsyncTask<Void,Void,Void> {
                 VistaRestaurante.jsonArray = json;
                 break;
             case"Obtener Calificación":
-                url = serverUrl+"getrestcall/"+comandos[1];
+                url = serverUrl+"getrestcal/"+comandos[1];
                 readJsonFromUrl(url);
                 try {
                     jobject = json.getJSONObject(0);
-                    Restaurante.nuevaCalificacion =  jobject.getDouble("calificacion");
+                    Double calificacion = jobject.getDouble("getrestcal");
+                    if(calificacion ==null)
+                        Restaurante.calificacionConector =  -1.0;
+                    else
+                        Restaurante.calificacionConector =  calificacion;
+
+
                 } catch (JSONException e) {
                     Log.i("Resultados",e.toString());
                 }
 
+                break;
+
+            case "Obtener Imagen URL":
+
+                AdaptadorListaRestaurantes.drawable =  cargarImagen(comandos[1]);
                 break;
 
 
@@ -232,7 +244,16 @@ public class Connector extends AsyncTask<Void,Void,Void> {
 
 
 
-
+    public  Drawable cargarImagen(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, "src name");
+            return d;
+        } catch (Exception e) {
+            Log.i("Resultados",e.toString());
+            return null;
+        }
+    }
 
 
 }

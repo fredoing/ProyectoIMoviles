@@ -43,6 +43,9 @@ public class FragmentListaRestaurantes extends Fragment {
         this.usuario = usuario;
     }
 
+    public FragmentListaRestaurantes() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

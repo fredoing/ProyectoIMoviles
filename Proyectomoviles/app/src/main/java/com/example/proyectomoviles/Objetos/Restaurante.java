@@ -2,6 +2,7 @@ package com.example.proyectomoviles.Objetos;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.example.proyectomoviles.Utils.Connector;
 import com.google.android.gms.maps.model.LatLng;
@@ -32,7 +33,7 @@ public class Restaurante implements Parcelable {
     public static boolean resultado;
     public static int userID;
     public static JSONArray jsonArray;
-    public static Double nuevaCalificacion = -1.0;
+    public static Double calificacionConector = -1.0;
 
     public Restaurante(String nombre, LatLng ubicacion, String tipoDeComida,String contacto, String precio, String horario, ArrayList<String> imagenesURL,Double calificacion,int id) {
         this.nombre = nombre;
@@ -81,7 +82,7 @@ public class Restaurante implements Parcelable {
         imagenesURL.add(imagenUrl);
     }
     
-    public String agregarCalificacion(int nuevaCalificacion, String correoAutor){
+    public void agregarCalificacion(int nuevaCalificacion, String correoAutor){
         String[] comandosGetUserId = {"Obtener Id Usuario",correoAutor};
         Connector connectorGetUserId = new Connector(comandosGetUserId);
         connectorGetUserId.execute();
@@ -110,7 +111,7 @@ public class Restaurante implements Parcelable {
             }
         }
 
-       /* String[] comandos= {"Obtener Calificación",String.valueOf(id)};
+        String[] comandos= {"Obtener Calificación",String.valueOf(id)};
         Connector connector = new Connector(comandos);
         connector.execute();
         try {
@@ -122,14 +123,15 @@ public class Restaurante implements Parcelable {
         } catch (TimeoutException e) {
             e.printStackTrace();
         }
-        if(nuevaCalificacion ==0){
-            return "0.0";
+
+        if(nuevaCalificacion != -1){
+            Log.i("Resultados","Error");
+            calificacion = calificacionConector;
         }
-        DecimalFormat formato = new DecimalFormat("#.0");
-        return formato.format(nuevaCalificacion);*/
 
 
-        return "";
+
+
     }
     public void cargarComentarios(){
         String[] comandos= {"Obtener Comentarios Restaurante",String.valueOf(id)};

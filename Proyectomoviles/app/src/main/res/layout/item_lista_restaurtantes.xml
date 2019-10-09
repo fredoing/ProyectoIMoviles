@@ -16,7 +16,7 @@
             android:layout_height="180sp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="22sp"
-            android:src="@drawable/restaurante_base">
+            android:src="@drawable/imagen_por_defecto">
 
         </ImageView>
         <TextView
